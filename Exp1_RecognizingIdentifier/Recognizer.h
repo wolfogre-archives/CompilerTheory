@@ -28,13 +28,7 @@ public:
 
 	~Recognizer(){};
 
-	std::map<std::string, int> RecognizeIdentifier(std::string codeFilePath){
-		std::ifstream fin;
-		fin.open(codeFilePath);
-		std::stringstream buffer;
-		buffer << fin.rdbuf();
-		std::string inputString(buffer.str());
-		fin.close();
+	std::map<std::string, int> RecognizeIdentifier(std::string inputString){
 
 		std::vector<std::string> temp_string_list;
 		unsigned int start = -1;
@@ -47,21 +41,19 @@ public:
 			}
 		}
 		
-		std::vector<std::string> string_list;
+		std::map<std::string, int> result;
 		for (std::string str : temp_string_list){
 			transform(str.begin(), str.end(), str.begin(), tolower);
 			if (str.length() > 0 && !IsBasicWord(str) && !IsNumber(str[0]))
-				string_list.push_back(str);
+			{
+				std::map<std::string, int>::iterator it = result.find(str);
+				if (it == result.end())
+					result.insert(std::pair<std::string, int>(str, 1));
+				else
+					++it->second;
+			}
 		}
 
-		std::map<std::string, int> result;
-		for (std::string str : string_list){
-			std::map<std::string,int>::iterator it = result.find(str);
-			if (it == result.end())
-				result.insert(std::pair<std::string, int>(str, 1));
-			else
-				++it->second;
-		}
 		return result;
 	}
 
