@@ -9,7 +9,7 @@ int main(){
 	Recognizer r;
 	string inputFile = "exp1_input.txt";
 
-	std::ifstream fin(inputFile);
+	ifstream fin(inputFile);
 	if (!fin){
 		cerr << "Can not open " + inputFile + "!"<< endl;
 		return -1;
