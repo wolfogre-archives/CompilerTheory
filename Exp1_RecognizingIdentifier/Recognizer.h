@@ -31,7 +31,7 @@ public:
 	std::map<std::string, int> RecognizeIdentifier(std::string inputString){
 
 		std::vector<std::string> temp_string_list;
-		unsigned int start = -1;
+		unsigned int start = -1;//God, it's OK, start is 4294967295;
 
 		for (unsigned int end = 0; end < inputString.length(); ++end){
 			if (IsSeparator(inputString[end]))
