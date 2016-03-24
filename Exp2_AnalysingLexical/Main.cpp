@@ -1,16 +1,29 @@
 #include <iostream>
 #include <string>
-#include "Glossary.h"
+#include <vector>
+#include "Analyser.h"
 
 using namespace std;
 
 int main(){
-	cout << "Input word to test Glossary:" << endl;
-	while (true){
-		Glossary g;
-		string str;
-		cin >> str;
-		cout << g.GetValue(str) << endl;
+	Analyser analyser;
+	string inputFile = "exp2_input.txt";
+
+	ifstream fin(inputFile);
+	if (!fin){
+		cerr << "Can not open " + inputFile + "!" << endl;
+		return -1;
 	}
-	return 0;
+	std::stringstream buffer;
+	buffer << fin.rdbuf();
+	std::string inputString(buffer.str());
+	fin.close();
+
+	vector<pair<string, string>> result = analyser.AnalyseLexical(inputString);
+	ofstream fout("exp2_output.txt");
+	for (pair<string, string> p : result){
+		fout << "(" << p.second << ",\t" << p.first << ")" << endl;
+	}
+	fout.close();
+	cout << "Done!" << endl;
 }

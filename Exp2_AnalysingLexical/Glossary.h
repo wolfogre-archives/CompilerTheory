@@ -68,6 +68,12 @@ public:
 		return "unknown";
 	}
 
+	bool IsOperator(std::string str)//For Recgnizer.RecognizeWord()
+	{
+		std::map<std::string, std::string>::iterator it = operators.find(str);
+		return it != operators.end();
+	}
+
 protected:
 
 	bool IsNumber(std::string key)
