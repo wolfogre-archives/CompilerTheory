@@ -41,7 +41,8 @@ public:
 				start = end;
 			}
 		}
-		
+		temp_string_list.push_back(inputString.substr(start + 1, inputString.length() - (start + 1)));
+
 		std::map<std::string, int> result;
 		for (std::string str : temp_string_list){
 			transform(str.begin(), str.end(), str.begin(), tolower);

@@ -5,3 +5,11 @@ Begin
   b2:=a1+num;
   write(A1,B2);
 End.
+
+12as
+
+as12
+
+asdf.
+
+122a
