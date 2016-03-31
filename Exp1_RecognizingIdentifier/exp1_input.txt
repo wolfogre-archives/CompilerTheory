@@ -1,15 +1,10 @@
-Const num=100;
+Const 2num=100;
 Var a1,b2;
-Begin
+Begin2
   Read(A1);
   b2:=a1+num;
   write(A1,B2);
-End.
+E$n;d.
 
-12as
-
-as12
-
-asdf.
-
-122a
+Essn;
+E#n;

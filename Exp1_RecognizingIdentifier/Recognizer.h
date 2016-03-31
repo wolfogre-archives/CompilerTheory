@@ -46,7 +46,7 @@ public:
 		std::map<std::string, int> result;
 		for (std::string str : temp_string_list){
 			transform(str.begin(), str.end(), str.begin(), tolower);
-			if (str.length() > 0 && !IsBasicWord(str) && !IsNumber(str[0]))
+			if (str.length() > 0 && !IsBasicWord(str) && IsValid(str))
 			{
 				std::map<std::string, int>::iterator it = result.find(str);
 				if (it == result.end())
@@ -61,11 +61,13 @@ public:
 
 protected:
 
+	bool IsValid(std::string word){
+		return word.find_first_not_of("1234567890abcdefghijklmnopqrstuvwxyz") == std::string::npos
+			&& std::string("1234567890").find(word[0]) == std::string::npos;
+	}
+
 	bool IsSeparator(char ch){
-		return !(
-			IsNumber(ch)
-			|| ch >= 'a' && ch <= 'z'
-			|| ch >= 'A' && ch <= 'Z');
+		return std::string("+-*/=#<>:(),;. \n\t").find_first_of(ch) != std::string::npos;
 	}
 
 	bool IsNumber(char ch){
