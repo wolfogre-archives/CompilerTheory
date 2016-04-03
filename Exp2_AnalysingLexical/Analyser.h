@@ -62,10 +62,7 @@ protected:
 	}
 
 	bool IsSeparator(char ch){
-		return !(
-			ch >= '0' && ch <= '9'
-			|| ch >= 'a' && ch <= 'z'
-			|| ch >= 'A' && ch <= 'Z');
+		return std::string("+-*/=#<>:(),;. \n\t").find_first_of(ch) != std::string::npos;;
 	}
 
 	bool IsUsefulChar(char ch){

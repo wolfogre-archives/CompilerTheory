@@ -6,10 +6,8 @@ begin
   write(c)
 end.
 
-12sss
-
-###
-
+asd$as;
+as;
 
 
 

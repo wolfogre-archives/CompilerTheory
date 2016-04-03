@@ -19,4 +19,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Exp2_AnalysingLexical\Analyser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Exp2_AnalysingLexical\Glossary.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Expector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
