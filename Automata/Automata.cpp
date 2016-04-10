@@ -1,18 +1,26 @@
 #include "Automata.h"
 
-
-
 Automata::Automata()
 {
+	_start_status = NULL;
+	_now_status = _start_status;
 }
-
 
 Automata::~Automata()
 {
+	for (Status *p_status : _status_set)
+		delete p_status;
+}
+
+void Automata::Restart()
+{
+	_now_status = _start_status;
 }
 
 bool Automata::Run(std::string input)
 {
+	if (_now_status == NULL)
+		return false;
 	std::map<std::string, std::string>::const_iterator path = (_now_status->paths).find(input);
 	if (path == (_now_status->paths).end())
 		return false;
@@ -29,17 +37,21 @@ bool Automata::Run(std::string input)
 
 bool Automata::AddStatus(std::string status_name, bool is_start, bool is_stop)
 {
-	if (is_start && _now_status != NULL)
+	if (is_start && _start_status != NULL)
 		return false;
+
 	for (std::set<Status*>::iterator it = _status_set.begin(); it != _status_set.end(); ++it)
 		if ((*it)->status_name == status_name)
 			return false;
+
 	Status* p_status = new Status(status_name);
+	if (is_stop)
+		p_status->isStopStatus = true;
 	_status_set.insert(p_status);
 	if (is_start)
-		_now_status = p_status;
-	if (is_stop)
-		_stop_status_set.insert(p_status);
+		_start_status = p_status;
+
+	Restart();
 	return true;
 }
 
@@ -49,6 +61,7 @@ bool Automata::AddPath(std::string from_status, std::string to_status, std::stri
 	for (it = _status_set.begin(); it != _status_set.end(); ++it)
 		if ((*it)->status_name == from_status)
 			break;
+
 	if (it == _status_set.end())
 		return false;
 
@@ -56,30 +69,43 @@ bool Automata::AddPath(std::string from_status, std::string to_status, std::stri
 		return false;
 
 	(*it)->paths.insert(std::pair<std::string, std::string>(input, to_status));
+	Restart();
 	return true;
 }
 
 bool Automata::IsStopped()
 {
-	return (_stop_status_set.find(_now_status) != _stop_status_set.end());
+	return _now_status->isStopStatus;
 }
 
-std::string Automata::Show()
+std::string Automata::NowStatus()
 {
 	std::string result;
-	result += "Now Status:";
-	if (_now_status == NULL)
-		result += "NULL";
-	else
-		result += _now_status->status_name;
-	result += "\n";
+	result += _now_status->status_name;
+	if (_now_status->isStopStatus)
+		result += "\tStop";
+	return result;
+}
 
-	for (std::set<Status*>::iterator it = _status_set.begin(); it != _status_set.end(); ++it)
+std::string Automata::AllStatus()
+{
+	std::string result;
+	for (Status *p_status : _status_set)
 	{
-		result += "Status :";
-		result += (*it)->status_name + "\n";
-		for (std::pair<std::string, std::string> p : (*it)->paths)
-			result += "\t input:" + p.first + "\tto" + p.second + "\n";
+		result += p_status->status_name;
+		if (p_status->isStopStatus)
+			result += "\tStop";
+		result += "\n";
 	}
 	return result;
 }
+
+std::string Automata::AllPaths()
+{
+	std::string result;
+	for (Automata::Status *p_status : _status_set)
+		for (std::pair<std::string, std::string> pr : p_status->paths)
+			result += p_status->status_name + "\t-- " + pr.first + " -->\t" + pr.second + "\n";
+	return result;
+}
+
