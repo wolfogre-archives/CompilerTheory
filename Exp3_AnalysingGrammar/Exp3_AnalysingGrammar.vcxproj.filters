@@ -29,5 +29,8 @@
     <ClInclude Include="Expector.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LR0_Analyser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

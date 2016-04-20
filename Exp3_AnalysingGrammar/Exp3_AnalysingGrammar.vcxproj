@@ -84,6 +84,7 @@
     <ClInclude Include="..\Exp2_AnalysingLexical\Analyser.h" />
     <ClInclude Include="..\Exp2_AnalysingLexical\Glossary.h" />
     <ClInclude Include="Expector.h" />
+    <ClInclude Include="LR0_Analyser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
