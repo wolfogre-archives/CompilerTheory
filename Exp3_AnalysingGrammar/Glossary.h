@@ -78,7 +78,8 @@ protected:
 
 	bool IsNumber(std::string key)
 	{
-		return key.length() > 0 && key.find_first_not_of("1234567890") == std::string::npos;
+		return key.length() > 0 && key.find_first_not_of("1234567890") == std::string::npos
+			|| key.length() > 1 && ( key[0] == '-' || key[0] == '+') && key.substr(1).find_first_not_of("1234567890") == std::string::npos;
 	}
 
 	bool CanBeIdentifier(std::string key)

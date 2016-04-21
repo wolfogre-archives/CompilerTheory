@@ -100,8 +100,8 @@ public:
 
 		for (index = 0; index < inputs.size(); ++index)
 		{
-			Show(status_stack);
-			Show(chars_stack);
+			//Show(status_stack);
+			//Show(chars_stack);
 
 			char type;
 			int value;
