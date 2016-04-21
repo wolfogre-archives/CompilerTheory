@@ -15,6 +15,17 @@ public:
 		this->inputs.push_back(END_OF_INPUT);
 	}
 
+	LR0_Analyser()
+	{
+
+	}
+
+	void Input(std::vector<std::string> inputs)
+	{
+		this->inputs = inputs;
+		this->inputs.push_back(END_OF_INPUT);
+	}
+
 	void AddProduction(std::string left, std::string right1)
 	{
 		std::vector<std::string> right_list;
