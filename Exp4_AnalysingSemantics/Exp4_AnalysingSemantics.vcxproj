@@ -149,7 +149,7 @@
     <ClInclude Include="Analyser.h" />
     <ClInclude Include="Expector.h" />
     <ClInclude Include="Glossary.h" />
-    <ClInclude Include="LR0_AnalyserPlus.h" />
+    <ClInclude Include="LR0_Analyser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

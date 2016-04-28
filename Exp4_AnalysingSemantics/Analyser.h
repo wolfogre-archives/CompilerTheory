@@ -12,29 +12,29 @@ class Analyser
 {
 public:
 
-	Analyser(){}
-	~Analyser(){}
+	Analyser() {}
+	~Analyser() {}
 
-	std::vector<std::pair<std::string, std::string>> AnalyseLexical(std::string inputString){
+	std::vector<std::pair<std::string, std::string>> AnalyseLexical(std::string inputString) {
 		std::vector<std::string> words = RecognizeWord(inputString);
 		std::vector<std::pair<std::string, std::string>> result;
 
 		Glossary g;
 		for (std::string word : words)
 			result.push_back(std::pair<std::string, std::string>(word, g.GetValue(word)));
-			
+
 		return result;
 	}
 
 protected:
 
-	std::vector<std::string> RecognizeWord(std::string inputString){
+	std::vector<std::string> RecognizeWord(std::string inputString) {
 		inputString += "\n";
 		std::vector<std::string> result;
 		Glossary g;
 		unsigned int start = -1;
 
-		for (unsigned int end = 0; end < inputString.length(); ++end){
+		for (unsigned int end = 0; end < inputString.length(); ++end) {
 			if (IsSeparator(inputString[end]))
 			{
 				std::string sub_string = inputString.substr(start + 1, end - (start + 1));
@@ -63,11 +63,11 @@ protected:
 		return result;
 	}
 
-	bool IsSeparator(char ch){
+	bool IsSeparator(char ch) {
 		return std::string("+-*/=#<>:(),;. \n\t").find_first_of(ch) != std::string::npos;;
 	}
 
-	bool IsUsefulChar(char ch){
+	bool IsUsefulChar(char ch) {
 		return std::string("+-*/=#<>:(),;.").find_first_of(ch) != std::string::npos;
 	}
 

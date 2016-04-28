@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 
-#include "LR0_AnalyserPlus.h"
+#include "LR0_Analyser.h"
 #include "Analyser.h"
 #include "Glossary.h"
 
@@ -12,36 +12,27 @@ using namespace std;
 int TestLR0_Analyer();
 vector<string> Escape(vector<pair<string, string>> lexResult);
 
-int add(int v1, int v2, int v3, int v4, int v5)
-{
-	return v1 + v2;
-}
-
-int sub(int v1, int v2, int v3, int v4, int v5)
-{
-	return v1 + v2;
-}
-
 int main()
 {
 	//return TestLR0_Analyer();
-	LR0_AnalyserPlus la;
+	LR0_Analyser la;
+
 	la.AddProduction("E", "E", "+", "E");
 	la.AddProduction("E", "E", "*", "E");
 	la.AddProduction("E", "(", "E", ")");
 	la.AddProduction("E", "i");
-	//TODO,
+
 	la.AddAction(0, "(", 'S', 2);
 	la.AddAction(0, "i", 'S', 3);
 	la.AddAction(1, "+", 'S', 4);
 	la.AddAction(1, "*", 'S', 5);
-	la.AddAction(1, LR0_AnalyserPlus::END_OF_INPUT, 'A', 0);
+	la.AddAction(1, LR0_Analyser::END_OF_INPUT, 'A', 0);
 	la.AddAction(2, "(", 'S', 2);
 	la.AddAction(2, "i", 'S', 3);
 	la.AddAction(3, "+", 'r', 4);
 	la.AddAction(3, "*", 'r', 4);
 	la.AddAction(3, ")", 'r', 4);
-	la.AddAction(3, LR0_AnalyserPlus::END_OF_INPUT, 'r', 4);
+	la.AddAction(3, LR0_Analyser::END_OF_INPUT, 'r', 4);
 	la.AddAction(4, "(", 'S', 2);
 	la.AddAction(4, "i", 'S', 3);
 	la.AddAction(5, "(", 'S', 2);
@@ -52,15 +43,15 @@ int main()
 	la.AddAction(7, "+", 'r', 1);
 	la.AddAction(7, "*", 'S', 5);
 	la.AddAction(7, ")", 'r', 1);
-	la.AddAction(7, LR0_AnalyserPlus::END_OF_INPUT, 'r', 1);
+	la.AddAction(7, LR0_Analyser::END_OF_INPUT, 'r', 1);
 	la.AddAction(8, "+", 'r', 2);
 	la.AddAction(8, "*", 'r', 2);
 	la.AddAction(8, ")", 'r', 2);
-	la.AddAction(8, LR0_AnalyserPlus::END_OF_INPUT, 'r', 2);
+	la.AddAction(8, LR0_Analyser::END_OF_INPUT, 'r', 2);
 	la.AddAction(9, "+", 'r', 3);
 	la.AddAction(9, "*", 'r', 3);
 	la.AddAction(9, ")", 'r', 3);
-	la.AddAction(9, LR0_AnalyserPlus::END_OF_INPUT, 'r', 3);
+	la.AddAction(9, LR0_Analyser::END_OF_INPUT, 'r', 3);
 
 	la.AddGoto(0, "E", 1);
 	la.AddGoto(2, "E", 6);
@@ -70,7 +61,7 @@ int main()
 	Analyser analyser;
 	string input_string;
 
-	while (cout << "input expression: ",getline(cin,input_string))
+	while (cout << "input expression: ", getline(cin, input_string))
 	{
 		vector<pair<string, string>> lex_result = analyser.AnalyseLexical(input_string);
 		int error_index = -1;
@@ -92,7 +83,7 @@ int main()
 
 		if ((error_index = la.Analyse()) != -1)
 		{
-			if(error_index == lex_result.size())
+			if (error_index == lex_result.size())
 				cout << "Error on: the end of input" << endl;
 			else
 				cout << "Error on: " << lex_result[error_index].first << endl;
@@ -136,7 +127,7 @@ int TestLR0_Analyer()
 	inputs.push_back("d");
 	inputs.push_back("e");
 
-	LR0_AnalyserPlus la(inputs);
+	LR0_Analyser la(inputs);
 
 	la.AddProduction("S", "a", "A", "c", "B", "e");
 	la.AddProduction("A", "b");
@@ -144,16 +135,16 @@ int TestLR0_Analyer()
 	la.AddProduction("B", "d");
 
 	la.AddAction(0, "a", 'S', 2);
-	la.AddAction(1, LR0_AnalyserPlus::END_OF_INPUT, 'A', 0);
+	la.AddAction(1, LR0_Analyser::END_OF_INPUT, 'A', 0);
 	la.AddAction(2, "b", 'S', 4);
 	la.AddAction(3, "c", 'S', 5);
 	la.AddAction(3, "b", 'S', 6);
-	la.AddAction(4, LR0_AnalyserPlus::ALL_OF_INPUT, 'r', 2);
+	la.AddAction(4, LR0_Analyser::ALL_OF_INPUT, 'r', 2);
 	la.AddAction(5, "d", 'S', 8);
-	la.AddAction(6, LR0_AnalyserPlus::ALL_OF_INPUT, 'r', 3);
+	la.AddAction(6, LR0_Analyser::ALL_OF_INPUT, 'r', 3);
 	la.AddAction(7, "e", 'S', 9);
-	la.AddAction(8, LR0_AnalyserPlus::ALL_OF_INPUT, 'r', 4);
-	la.AddAction(9, LR0_AnalyserPlus::ALL_OF_INPUT, 'r', 1);
+	la.AddAction(8, LR0_Analyser::ALL_OF_INPUT, 'r', 4);
+	la.AddAction(9, LR0_Analyser::ALL_OF_INPUT, 'r', 1);
 
 	la.AddGoto(0, "S", 1);
 	la.AddGoto(2, "A", 3);
