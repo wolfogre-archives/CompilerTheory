@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Automata", "Automata\Automa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomataTester", "AutomataTester\AutomataTester.vcxproj", "{3C489698-521A-496B-9B63-E6B9D522AD17}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exp4_AnalysingSemantics", "Exp4_AnalysingSemantics\Exp4_AnalysingSemantics.vcxproj", "{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -55,6 +57,14 @@ Global
 		{3C489698-521A-496B-9B63-E6B9D522AD17}.Release|Win32.Build.0 = Release|Win32
 		{3C489698-521A-496B-9B63-E6B9D522AD17}.Release|x64.ActiveCfg = Release|x64
 		{3C489698-521A-496B-9B63-E6B9D522AD17}.Release|x64.Build.0 = Release|x64
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Debug|Win32.Build.0 = Debug|Win32
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Debug|x64.ActiveCfg = Debug|x64
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Debug|x64.Build.0 = Debug|x64
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Release|Win32.ActiveCfg = Release|Win32
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Release|Win32.Build.0 = Release|Win32
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Release|x64.ActiveCfg = Release|x64
+		{CD74EDC8-E215-4EFA-A9A0-360D8D34EAA9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
