@@ -20,19 +20,8 @@ public:
 		std::vector<std::pair<std::string, std::string>> result;
 
 		Glossary g;
-		for (size_t i = 0; i < words.size(); ++i)
-		{
-			std::string temp = words[i];
-			if (g.GetValue(words[i]) == "number" && i >= 2
-				&& (g.GetValue(words[i - 1]) == "plus" || g.GetValue(words[i - 1]) == "minus")
-				&& !(g.GetValue(words[i - 2]) == "number" || g.GetValue(words[i - 2]) == "rparen" || g.GetValue(words[i - 2]) == "ident")
-				)
-			{
-				temp = result.back().first + words[i];
-				result.pop_back();
-			}
-			result.push_back(std::pair<std::string, std::string>(temp, g.GetValue(temp)));
-		}
+		for (std::string word : words)
+			result.push_back(std::pair<std::string, std::string>(word, g.GetValue(word)));
 			
 		return result;
 	}
