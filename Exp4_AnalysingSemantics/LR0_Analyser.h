@@ -4,6 +4,15 @@
 #include <string>
 #include <iostream>
 
+/* Get out!
+ * You shouldn't be there!
+ * To complete Exp4,
+ * LR0_Analyser has been contaminated!
+ * Get out!
+ * Get out!
+ * Get out!
+*/
+
 class LR0_Analyser
 {
 public:
