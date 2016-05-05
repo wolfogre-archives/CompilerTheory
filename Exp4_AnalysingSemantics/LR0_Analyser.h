@@ -9,10 +9,10 @@ class LR0_Analyser
 public:
 
 
-	LR0_Analyser(std::vector<std::string> inputs)
+	LR0_Analyser(std::vector<std::pair<std::string, int>> inputs)
 	{
 		this->inputs = inputs;
-		this->inputs.push_back(END_OF_INPUT);
+		this->inputs.push_back(std::pair<std::string, int>(END_OF_INPUT, 0));
 	}
 
 	LR0_Analyser()
@@ -20,10 +20,10 @@ public:
 
 	}
 
-	void Input(std::vector<std::string> inputs)
+	void Input(std::vector<std::pair<std::string, int>> inputs)
 	{
 		this->inputs = inputs;
-		this->inputs.push_back(END_OF_INPUT);
+		this->inputs.push_back(std::pair<std::string, int>(END_OF_INPUT, 0));
 	}
 
 	void AddProduction(std::string left, std::string right1)
@@ -94,6 +94,7 @@ public:
 	{
 		std::vector<int> status_stack;
 		std::vector<std::string> chars_stack;
+		std::vector<int> value_stack;
 
 		status_stack.push_back(0);
 		size_t index = 0;
@@ -105,13 +106,14 @@ public:
 
 			char type;
 			int value;
-			if (!getAction(status_stack.back(), inputs[index], type, value))
+			if (!getAction(status_stack.back(), inputs[index].first, type, value))
 				return index;
 
 			if (type == 's' || type == 'S')
 			{
 				status_stack.push_back(value);
-				chars_stack.push_back(inputs[index]);
+				chars_stack.push_back(inputs[index].first);
+				value_stack.push_back(inputs[index].second);
 				continue;
 			}
 
@@ -119,23 +121,62 @@ public:
 			{
 				--index;
 				std::pair<std::string, std::vector<std::string>> production = production_list[value - 1];
+				
+				int new_value;
+
+				if (value - 1 == 0)
+				{
+					if (value_stack[value_stack.size() - 1 - 1] == ADD_OPERATOR)
+						new_value = value_stack[value_stack.size() - 1 - 2] + value_stack[value_stack.size() - 1 - 0];
+					else
+						new_value = value_stack[value_stack.size() - 1 - 2] - value_stack[value_stack.size() - 1 - 0];
+				}
+
+				if (value - 1 == 1)
+				{
+					if (value_stack[value_stack.size() - 1 - 1] == MUL_OPERATOR)
+						new_value = value_stack[value_stack.size() - 1 - 2] * value_stack[value_stack.size() - 1 - 0];
+					else
+					{
+						if (value_stack[value_stack.size() - 1 - 0] == 0)
+							return index;
+						new_value = value_stack[value_stack.size() - 1 - 2] / value_stack[value_stack.size() - 1 - 0];
+					}
+						
+				}
+
+				if (value - 1 == 2)
+				{
+					new_value = value_stack[value_stack.size() - 1 - 1];
+				}
+
+				if (value - 1 == 3)
+				{
+					new_value = value_stack[value_stack.size() - 1 - 0];
+				}
+				
 				while (!production.second.empty())
 				{
 					production.second.pop_back();
 					chars_stack.pop_back();
 					status_stack.pop_back();
+					value_stack.pop_back();
 				}
 				chars_stack.push_back(production.first);
 				int goto_value;
 				if (!getGoto(status_stack.back(), production.first, goto_value))
 					return index;
 				status_stack.push_back(goto_value);
+				result = new_value;
+				value_stack.push_back(new_value);
 				continue;
 			}
 
 			if (type == 'a' || type == 'A')
 			{
+				std::cout << "Result is " << getResult() << std::endl;
 				return -1;
+				
 			}
 
 		}
@@ -143,8 +184,18 @@ public:
 		return index;
 	}
 
+	int getResult()
+	{
+		return result;
+	}
+
 	static const std::string END_OF_INPUT;
 	static const std::string ALL_OF_INPUT;
+
+	static const int ADD_OPERATOR;
+	static const int SUB_OPERATOR;
+	static const int MUL_OPERATOR;
+	static const int DIV_OPERATOR;
 
 protected:
 	struct Action
@@ -203,11 +254,17 @@ protected:
 	}
 private:
 
-	std::vector<std::string> inputs;
+	std::vector<std::pair<std::string, int>> inputs;
 	std::vector<Action> action_list;
 	std::vector<Goto> goto_list;
 	std::vector<std::pair<std::string, std::vector<std::string>>> production_list;
+	int result;
 };
 
 const std::string LR0_Analyser::END_OF_INPUT = "end_of_input_i_love_vivia";
 const std::string LR0_Analyser::ALL_OF_INPUT = "all_of_input_i_love_vivia";
+
+const int LR0_Analyser:: ADD_OPERATOR = INT_MAX;
+const int LR0_Analyser:: SUB_OPERATOR = INT_MAX - 1;
+const int LR0_Analyser:: MUL_OPERATOR = INT_MIN;
+const  int LR0_Analyser:: DIV_OPERATOR = INT_MIN + 1;
