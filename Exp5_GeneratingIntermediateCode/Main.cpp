@@ -10,7 +10,7 @@
 
 using namespace std;
 
-vector<pair<string, int>> Escape(vector<pair<string, string>> lexResult);
+vector<pair<string, string>> Escape(vector<pair<string, string>> lexResult);
 
 int main()
 {
@@ -74,7 +74,7 @@ int main()
 			cout << "Error on: " << lex_result[error_index].first << endl;
 			continue;
 		}
-		vector<pair<string, int>> escape_result = Escape(lex_result);
+		vector<pair<string, string>> escape_result = Escape(lex_result);
 		la.Input(escape_result);
 
 		if ((error_index = la.Analyse()) != -1)
@@ -99,7 +99,7 @@ int StringToInt(string str)
 	return result;
 }
 
-vector<pair<string, int>> Escape(vector<pair<string, string>> lexResult)
+vector<pair<string, string>> Escape(vector<pair<string, string>> lexResult)
 {
 	map<string, string> escape_tactics;
 	Glossary glossary;
@@ -112,28 +112,28 @@ vector<pair<string, int>> Escape(vector<pair<string, string>> lexResult)
 	escape_tactics.insert(pair<string, string>(glossary.GetValue("("), string("(")));
 	escape_tactics.insert(pair<string, string>(glossary.GetValue(")"), string(")")));
 
-	vector<pair<string, int>> result;
+	vector<pair<string, string>> result;
 	for (pair<string, string> p : lexResult)
 	{
 		map<string, string>::iterator it = escape_tactics.find(p.second);
-		pair<string, int> new_pair;
+		pair<string, string> new_pair;
 		new_pair.first = it->second;
 		if (p.second == glossary.GetValue("+"))
-			result.push_back(pair<string, int>("+", LR0_Analyser::ADD_OPERATOR));
+			result.push_back(pair<string, string>("+", "+"));
 		if (p.second == glossary.GetValue("-"))
-			result.push_back(pair<string, int>("+", LR0_Analyser::SUB_OPERATOR));
+			result.push_back(pair<string, string>("+", "-"));
 		if (p.second == glossary.GetValue("*"))
-			result.push_back(pair<string, int>("*", LR0_Analyser::MUL_OPERATOR));
+			result.push_back(pair<string, string>("*", "*"));
 		if (p.second == glossary.GetValue("/"))
-			result.push_back(pair<string, int>("*", LR0_Analyser::DIV_OPERATOR));
+			result.push_back(pair<string, string>("*", "/"));
 		if (p.second == glossary.GetValue("name"))
-			result.push_back(pair<string, int>("i", 1000));
+			result.push_back(pair<string, string>("i", p.first));
 		if (p.second == glossary.GetValue("100"))
-			result.push_back(pair<string, int>("i", StringToInt(p.first)));
+			result.push_back(pair<string, string>("i", p.first));
 		if (p.second == glossary.GetValue("("))
-			result.push_back(pair<string, int>("(", 0));
+			result.push_back(pair<string, string>("(", "("));
 		if (p.second == glossary.GetValue(")"))
-			result.push_back(pair<string, int>(")", 0));
+			result.push_back(pair<string, string>(")", ")"));
 		
 	}
 	return result;
